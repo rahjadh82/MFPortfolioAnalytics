@@ -13,9 +13,12 @@ total_unique_secs = holdings_df['security_name'].nunique()
 print(f"Total unique stocks held: {total_unique_secs}")
 
 
-top_holdings_df = holdings_df['security_name'].value_counts(sort=True)
-print(f"Top security holdings across funds by count:\n {top_holdings_df}")
+holdings_by_sec_count_df = holdings_df['security_name'].value_counts(sort=True)
+print(f"\n\nSecurity holdings across funds by count:\n{holdings_by_sec_count_df}")
+sec_held_in_more_than_1_fund_df = holdings_by_sec_count_df[holdings_by_sec_count_df > 1]
+print(f"\n\nSecurities held in more than 1 fund:\n{sec_held_in_more_than_1_fund_df}")
 
-#print(holdings_df.groupby('security_name').agg({'my_holding_of_sec':'sum'}).sort('my_holding_of_sec'))
-top_holdings_by_value = holdings_df.groupby('security_name').my_holding_of_sec.agg([sum]).sort_values(by='sum', ascending=False)
-print(f"\n\nTop security holdings across funds by value:\n {top_holdings_by_value}")
+holdings_by_sec_value_df = holdings_df.groupby('security_name').my_holding_of_sec.agg([sum]).sort_values(by='sum', ascending=False)
+print(f"\n\nSecurity holdings across funds by value:\n{holdings_by_sec_value_df}")
+top_10_holdings_by_value_df = holdings_by_sec_value_df[holdings_by_sec_value_df['sum'] >= 20000 ]
+print(f"\n\nTop 10 Securities by value:\n{top_10_holdings_by_value_df}")
